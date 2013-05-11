@@ -1,6 +1,6 @@
-# Framework Name TodoMVC Example
+# Durandal TodoMVC Example
 
-This is a todo app built using [framework](https://example.com/framework).
+This is a todo app built using [DurandalJS](https://durandaljs.com).
 
 ## Framework
 
