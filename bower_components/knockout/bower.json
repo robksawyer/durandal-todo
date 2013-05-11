@@ -1,0 +1,9 @@
+{
+  "name": "knockout",
+  "main": "index.js",
+  "version": "0.0.0",
+  "repository": {
+    "type": "asset",
+    "url": "http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.2.0.js"
+  }
+}

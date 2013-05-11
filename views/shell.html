@@ -1,0 +1,32 @@
+﻿<section id="todoapp" class="page-host">
+	<header id="header">
+		<h1>todos</h1>
+		<input id="new-todo" placeholder="What needs to be done?" autofocus>
+	</header>
+	
+	<!--ko compose: { 
+		model: router.activeItem, //wiring the router
+		afterCompose: router.afterCompose, //wiring the router
+		cacheViews:true //telling composition to keep views in the dom, and reuse them (only a good idea with singleton view models)
+	}--><!--/ko-->
+
+	<!-- This footer should hidden by default and shown when there are todos -->
+	<footer id="footer">
+		<!-- This should be `0 items left` by default -->
+		<span id="todo-count"><strong>1</strong> item left</span>
+		<!-- Remove this if you don't implement routing -->
+		<ul id="filters">
+			<li>
+				<a class="selected" href="#/">All</a>
+			</li>
+			<li>
+				<a href="#/active">Active</a>
+			</li>
+			<li>
+				<a href="#/completed">Completed</a>
+			</li>
+		</ul>
+		<!-- Hidden if no completed items are left ↓ -->
+		<button id="clear-completed">Clear completed (1)</button>
+	</footer>
+</section>
