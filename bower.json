@@ -4,8 +4,13 @@
 	"dependencies": {
 		"todomvc-common": "~0.1.4",
 		"requirejs": "~2.1.4",
-		"rjs": "~2.1.2",
+		"r": "https://raw.github.com/jrburke/r.js/master/dist/r.js",
 		"almond": "~0.2.0",
-		"text": "~2.0.3"
+		"text": "~2.0.3",
+		"knockout": "http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.2.0.js",
+		"sammy": "~0.7.4"
+	},
+	"devDependencies": {
+		"jquery": "~1.9.1"
 	}
 }

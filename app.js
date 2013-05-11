@@ -11,7 +11,7 @@ require.config({
 });
 
 // Load the main app module to start the app
-define(function($,ko,sammy) {
+define(function(require) {
 	'use strict';
 
 	// Your starting point. Enjoy the ride!
