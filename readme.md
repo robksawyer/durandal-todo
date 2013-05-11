@@ -1,6 +1,6 @@
 # Durandal TodoMVC Example
 
-This is a todo app built using [DurandalJS](https://durandaljs.com).
+This is a todo app built using [DurandalJS](http://durandaljs.com).
 
 ## Framework
 
