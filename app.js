@@ -2,14 +2,11 @@ require.config({
 	//'baseUrl': './',
 	'paths': {
 		'jquery': 'bower_components/jquery/jquery.min',
-		'ko': 'bower_components/knockout/index',
 		'sammy': 'bower_components/sammy/lib/min/sammy-latest.min',
-		'text': 'bower_components/text/text',
-		'r': 'bower_components/r/index'
+		'knockout': 'bower_components/knockout/index',
+		'text': 'bower_components/text/text'
 	}
 });
-
-var ENTER_KEY = 13;
 
 // Load the main app module to start the app
 define(function(require) {
@@ -25,7 +22,7 @@ define(function(require) {
 	//This second set of requirejs is temporary, until a custom mimosa module to handle it.
 	require('durandal/transitions/fadein');
 	require('viewmodels/shell');
-	require('scripts/bindings'); //custom Knockout bindings
+	require('scripts/bindings'); //Knockout bindings
 
 	system.debug(true);
 
@@ -37,7 +34,7 @@ define(function(require) {
 
 		//configure routing
 		router.useConvention();
-		router.mapNav('todo');
+		router.mapNav('todos');
 
 		app.adaptToDevice();
 

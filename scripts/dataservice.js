@@ -1,5 +1,9 @@
-define(['durandal/system', 'scripts/model'],
-	function(system, model){
+define([
+	'durandal/system', 
+	'scripts/model',
+	'scripts/config'
+	],
+	function(system, model, config){
 		
 		var getTodos = function (todoObservables){
 			//reset the observable 
@@ -8,17 +12,26 @@ define(['durandal/system', 'scripts/model'],
 			var todos = [];
 
 			// check local storage for todos
-			data = ko.utils.parseJson(localStorage.getItem('todos-durandal'));
+			data = ko.utils.parseJson(localStorage.getItem(config.localStorageItem));
 			data.forEach(function(item){
 				var t = new model.Todo(item);
 				todos.push(t);
 			});
-			todoObservables(todos); //Make the observable fire a change
+
+			/*if(todos.length < 1){
+				system.log('Mapping todos to observable array.');
+				return todos = ko.observableArray(ko.utils.arrayMap(todos, function (todo) {
+					return new Todo(todo.title, todo.completed);
+				}));
+			}*/
+	
+			todoObservables(todos); //Make the observable fire a change	
 			return todos;
 		};
 
-		return {
+		var dataservice = {
 			getTodos: getTodos
 		};
+		return dataservice;
 	}
 );

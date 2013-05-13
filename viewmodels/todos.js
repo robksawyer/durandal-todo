@@ -1,22 +1,33 @@
 ﻿define(
-	['durandal/app', 'ko', 'durandal/system', 'scripts/dataservice', 'scripts/model'], 
-	function(app, ko, system, dataservice, model) {
+	[
+	'durandal/app', 
+	'durandal/system', 
+	'scripts/dataservice', 
+	'scripts/model', 
+	'knockout',  
+	'jquery'
+	], 
+	function(app, system, dataservice, model, ko, jQuery) {
+	'use strict';	
 
 	var self = this,
-		current = ko.observable(), // store the new todo value being entered
-		todos = ko.observableArray(),
+		current = ko.observable(''), // store the new todo value being entered
+		todos = ko.observableArray([]),
 		showMode = ko.observable('all');
 
-	// internal computed observable that fires whenever anything changes in our todos
-	//Todo: convert this to pub/sub
-	ko.computed(function () {
-		// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
-		localStorage.setItem('todos-durandal', ko.toJSON(todos));
-	}).extend({
-		throttle: 500
-	}); // save at most twice per second
+	var vm = {
+		beforeBind: function(){
+			dataservice.getTodos(todos); //Fetch the todos
+			system.log(todos());
 
-	return {
+			addComputeds(this); //Add the Knockout computeds
+		},
+		afterBind: function(){
+			system.log('Total stored todos received: ' + todos().length);
+		},
+		viewAttached: function () {
+			system.log('Total todos: ' + todos().length);
+		},
 		current: current,
 		todos: todos,
 		showMode: showMode,
@@ -25,27 +36,16 @@
 		removeCompleted: removeCompleted,
 		editItem: editItem,
 		stopEditing: stopEditing,
-		getLabel: getLabel,
-		beforeBind: function(){
-			addComputeds(self); //Add the Knockout computeds
-		},
-		afterBind: function(){
-			dataservice.getTodos(todos); //Fetch the todos
-			system.log('Total stored todos received: ' + todos().length);
-			system.log(todos());
-		},
-		viewAttached: function () {
-			system.log('Total todos: ' + todos().length);
-			return;
-		}
+		getLabel: getLabel
 	};
+	return vm;
 
 	function addComputeds(entity){
-		system.log('Todos\' Knockout computes added.');
+		var dfd = new jQuery.Deferred();
 
 		//filter the todos based on the completion status
 		entity.filteredTodos = ko.computed(function () {
-			switch (showMode()) {
+			switch (entity.showMode()) {
 				case 'active':
 					return todos().filter(function (todo) {
 						return !todo.completed();
@@ -68,14 +68,14 @@
 
 		// count of todos that are not complete
 		entity.remainingCount = ko.computed(function () {
-			return todos().length - completedCount();
+			return todos().length - entity.completedCount();
 		});
 
 		// writeable computed observable to handle marking all complete/incomplete
 		entity.allCompleted = ko.computed({
 			//always return true/false based on the done flag of all todos
 			read: function () {
-				return !remainingCount();
+				return !entity.remainingCount();
 			},
 			// set all todos to the written value (true/false)
 			write: function (newValue) {
@@ -85,6 +85,18 @@
 				});
 			}
 		});
+
+		// internal computed observable that fires whenever anything changes in our todos
+		//Todo: convert this to pub/sub
+		ko.computed(function () {
+			// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
+			localStorage.setItem('todos-durandal', ko.toJSON(todos));
+		}).extend({
+			throttle: 500
+		}); // save at most twice per second
+
+		system.log('Todos\' Knockout computes added.');
+		return dfd.promise();
 	}
 
 

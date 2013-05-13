@@ -1,5 +1,10 @@
-define(['durandal/app','durandal/system'], function(app, system){
-
+define([
+	'knockout',
+	'scripts/config',
+	'durandal/system'
+	], 
+	function(ko, config, system){
+	'use strict';
 	// a custom binding to handle the enter key (could go in a separate library)
 	ko.bindingHandlers.enterKey = {
 		init: function (element, valueAccessor, allBindingsAccessor, data) {
@@ -7,8 +12,7 @@ define(['durandal/app','durandal/system'], function(app, system){
 
 			// wrap the handler with a check for the enter key
 			wrappedHandler = function (data, event) {
-				if (event.keyCode === app.ENTER_KEY) {
-					system.log('ENTER KEY PRESSED');
+				if (event.keyCode === config.ENTER_KEY) {
 					valueAccessor().call(this, data, event);
 				}
 			};

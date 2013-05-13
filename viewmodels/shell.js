@@ -2,7 +2,7 @@
 	return {
 		router: router,
 		activate: function () {
-			return router.activate('todo');
+			return router.activate('todos');
 		}
 	};
 });
