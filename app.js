@@ -22,7 +22,6 @@ define(function(require) {
 	//This second set of requirejs is temporary, until a custom mimosa module to handle it.
 	require('durandal/transitions/fadein');
 	require('viewmodels/shell');
-	require('scripts/bindings'); //Knockout bindings
 
 	system.debug(true);
 
