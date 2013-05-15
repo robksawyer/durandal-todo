@@ -6,14 +6,14 @@ define([
 	// represent a single todo item
 	var Todo = function (title, completed) {
 		//This is just a hack to build a model. In a real world example, this would likely come from an API.
-		this.title = title;
-		this.completed = completed;
-		this.editing = false;
+		this.title = ko.observable( title );
+		this.completed = ko.observable( completed );
+		this.editing = ko.observable( false );
 
 		//make the properties actual Knockout observables and then add any Knockout computeds
-		return addTodoComputeds(
+		/*return addTodoComputeds(
 				mapToObservable(this)
-			);
+			);*/
 	};
 
 	return {

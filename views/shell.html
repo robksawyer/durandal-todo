@@ -1,6 +1,6 @@
 ﻿<section id="todoapp" class="page-host">
 	<!--ko compose: { 
-		model: router.activeItem, //wiring the router
+		model: 'viewmodels/todos', //wiring the router
 		afterCompose: router.afterCompose, //wiring the router
 		cacheViews: false, //telling composition to keep views in the dom, and reuse them (only a good idea with singleton view models)
 		transition: 'fadein'

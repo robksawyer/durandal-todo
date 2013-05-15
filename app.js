@@ -1,10 +1,11 @@
 require.config({
 	//'baseUrl': './',
 	'paths': {
-		'jquery': 'bower_components/jquery/jquery.min',
-		'sammy': 'bower_components/sammy/lib/min/sammy-latest.min',
-		'knockout': 'bower_components/knockout/index',
-		'text': 'bower_components/text/text'
+		'jquery': 'components/jquery/jquery.min',
+		'sammy': 'components/sammy/lib/min/sammy-latest.min',
+		'knockout': 'components/knockout/build/output/knockout-latest',
+		'text': 'components/text/text',
+		'r': 'components/dist/r'
 	}
 });
 
@@ -20,8 +21,11 @@ define(function(require) {
 		router = require('durandal/plugins/router');
 
 	//This second set of requirejs is temporary, until a custom mimosa module to handle it.
-	require('durandal/transitions/fadein');
+	require('text');
+	require('sammy');
 	require('viewmodels/shell');
+	require('scripts/dataservice');
+	require('durandal/transitions/fadein');
 
 	system.debug(true);
 
@@ -33,7 +37,6 @@ define(function(require) {
 
 		//configure routing
 		router.useConvention();
-		router.mapAuto('viewmodels');
 		router.mapNav('todos');
 
 		app.adaptToDevice();

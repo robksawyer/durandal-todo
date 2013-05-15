@@ -1,12 +1,13 @@
 {
-	"name": "todomvc-template",
-	"version": "0.0.0",
+	"name": "todomvc-durandal",
+	"version": "0.1.0",
 	"dependencies": {
 		"todomvc-common": "~0.1.4",
 		"requirejs": "~2.1.4",
-		"r": "https://raw.github.com/jrburke/r.js/master/dist/r.js",
+		"rjs": "~2.1.6",
 		"text": "~2.0.3",
-		"knockout": "http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.2.0.js",
+		"knockout": "~2.2.0",
+		"knockout-mapping": "~2.4.1",
 		"sammy": "~0.7.4"
 	},
 	"devDependencies": {

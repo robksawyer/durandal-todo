@@ -1,9 +1,10 @@
 define([
+	'knockout',
 	'durandal/system', 
 	'scripts/model',
 	'scripts/config'
 	],
-	function(system, model, config){
+	function(ko, system, model, config){
 		
 		var getTodos = function (todoObservables){
 			//reset the observable 
@@ -13,17 +14,11 @@ define([
 
 			// check local storage for todos
 			data = ko.utils.parseJson(localStorage.getItem(config.localStorageItem));
+		
 			data.forEach(function(item){
 				var t = new model.Todo(item);
 				todos.push(t);
 			});
-
-			/*if(todos.length < 1){
-				system.log('Mapping todos to observable array.');
-				return todos = ko.observableArray(ko.utils.arrayMap(todos, function (todo) {
-					return new Todo(todo.title, todo.completed);
-				}));
-			}*/
 	
 			todoObservables(todos); //Make the observable fire a change	
 			return todos;
