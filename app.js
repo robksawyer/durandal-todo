@@ -25,7 +25,7 @@ define(function(require) {
 
 	system.debug(true);
 
-	app.title = 'Template • TodoMVC';
+	app.title = 'Durandal • TodoMVC';
 	app.start().then(function () {
 		//Replace 'viewmodels' in the moduleId with 'views' to locate the view.
 		//Look for partial views in a 'views' folder in the root.
@@ -33,6 +33,7 @@ define(function(require) {
 
 		//configure routing
 		router.useConvention();
+		router.mapAuto('viewmodels');
 		router.mapNav('todos');
 
 		app.adaptToDevice();

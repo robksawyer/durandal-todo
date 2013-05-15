@@ -13,7 +13,7 @@
 	'use strict';
 
 	var self = this,
-		current = ko.observable(''), // store the new todo value being entered
+		current = ko.observable(), // store the new todo value being entered
 		todos = ko.observableArray([]),
 		showMode = ko.observable('all');
 
@@ -101,28 +101,17 @@
 	}
 
 	var vm = {
-		activate: function(){
+		activate: function(obj, view){
+			
 			dataservice.getTodos(todos);
 
 			// internal computed observable that fires whenever anything changes in our todos
-			//Todo: convert this to pub/sub
 			ko.computed(function () {
 				// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
 				localStorage.setItem(config.localStorageItem, ko.toJSON(todos));
 			}).extend({
 				throttle: 500
 			}); // save at most twice per second
-			return true;
-		},
-		beforeBind: function(){
-			//dataservice.getTodos(todos); //Fetch the todos
-			system.log(todos());
-		},
-		afterBind: function(){
-			system.log('Total stored todos received: ' + todos().length);
-		},
-		viewAttached: function () {
-			system.log('Total todos: ' + todos().length);
 		},
 		current: current,
 		todos: todos,
@@ -139,4 +128,5 @@
 		allCompleted: allCompleted
 	};
 	return vm;
+
 });

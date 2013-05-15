@@ -1,10 +1,10 @@
 <header id="header">
 	<h1>todos</h1>
-	<input id="new-todo" data-bind="text: current, valueUpdate: 'afterkeydown', enterKey: add" placeholder="What needs to be done?" autofocus/>
+	<input id="new-todo" type="text" data-bind="value: current, valueUpdate: 'afterkeydown', enterKey: add" placeholder="What needs to be done?" autofocus>
 </header>
 <!-- This section should be hidden by default and shown when there are todos -->
 <section id="main" data-bind="visible: todos().length">
-	<input id="toggle-all" type="checkbox" data-bind="checked: allCompleted">
+	<input id="toggle-all" type="checkbox" data-bind="checked: allCompleted()">
 	<label for="toggle-all">Mark all as complete</label>
 	<ul id="todo-list" data-bind="foreach: todos">
 		<!-- These are here just to show the structure of the list items -->

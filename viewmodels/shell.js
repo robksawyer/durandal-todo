@@ -1,11 +1,12 @@
 ﻿define([
 	'durandal/plugins/router', 
 	'durandal/app'
-	], function (router, app) {
+	], 
+	function (router, app) {
 	return {
 		router: router,
 		activate: function () {
-			return router.activate('todos');
+			return router.activate('test');
 		}
 	};
 });
