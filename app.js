@@ -10,22 +10,21 @@ require.config({
 });
 
 // Load the main app module to start the app
-define(function(require) {
+define([
+		'durandal/app',
+		'durandal/viewLocator',
+		'durandal/system',
+		'durandal/plugins/router',
+		'scripts/native',
+		'scripts/bindings',
+		'viewmodels/shell',
+		'viewmodels/todos',
+		'durandal/transitions/fadein'
+	],
+	function(app, viewLocator, system, router) {
 	'use strict';
 
 	// Your starting point. Enjoy the ride!
-
-	var app = require('durandal/app'),
-		viewLocator = require('durandal/viewLocator'),
-		system = require('durandal/system'),
-		router = require('durandal/plugins/router');
-
-	//This second set of requirejs is temporary, until a custom mimosa module to handle it.
-	require('text');
-	require('sammy');
-	require('viewmodels/shell');
-	require('scripts/dataservice');
-	require('durandal/transitions/fadein');
 
 	system.debug(true);
 
@@ -37,10 +36,11 @@ define(function(require) {
 
 		//configure routing
 		router.useConvention();
-		router.mapNav('todos');
+		router.mapAuto();
+		//router.mapNav('todos');
 
 		app.adaptToDevice();
-
+		
 		//Show the app by setting the root view model for our application with a transition.
 		app.setRoot('viewmodels/shell', 'fadein');
 	});

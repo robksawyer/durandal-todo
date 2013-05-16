@@ -14,7 +14,6 @@ define([
 
 			// check local storage for todos
 			data = ko.utils.parseJson(localStorage.getItem(config.localStorageItem));
-		
 			data.forEach(function(item){
 				var t = new model.Todo(item);
 				todos.push(t);

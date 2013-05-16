@@ -5,15 +5,16 @@ define([
 	'use strict';
 	// represent a single todo item
 	var Todo = function (title, completed) {
+		var self = this;
 		//This is just a hack to build a model. In a real world example, this would likely come from an API.
-		this.title = ko.observable( title );
-		this.completed = ko.observable( completed );
-		this.editing = ko.observable( false );
+		self.title = title;
+		self.completed = completed;
+		self.editing = false;
 
 		//make the properties actual Knockout observables and then add any Knockout computeds
-		/*return addTodoComputeds(
+		return addTodoComputeds(
 				mapToObservable(this)
-			);*/
+			);
 	};
 
 	return {
