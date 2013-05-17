@@ -10,9 +10,11 @@ define([
 	ko.bindingHandlers.enterKey = {
 		init: function (element, valueAccessor, allBindingsAccessor, data) {
 			var wrappedHandler, newValueAccessor;
+
+			system.log("ENTER KEY PRESSED");
+			
 			// wrap the handler with a check for the enter key
 			wrappedHandler = function (data, event) {
-				system.log("ENTER KEY PRESSED");
 				if (event.keyCode === config.ENTER_KEY) {
 					valueAccessor().call(this, data, event);
 				}

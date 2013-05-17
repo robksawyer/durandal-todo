@@ -8,6 +8,9 @@
 	return {
 		router: router,
 		activate: function () {
+			return true;
+		},
+		viewAttached: function(){
 			return router.activate('todos');
 		}
 	};

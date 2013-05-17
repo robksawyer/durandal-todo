@@ -15,10 +15,6 @@ define([
 		'durandal/viewLocator',
 		'durandal/system',
 		'durandal/plugins/router',
-		'scripts/native',
-		'scripts/bindings',
-		'viewmodels/shell',
-		'viewmodels/todos',
 		'durandal/transitions/fadein'
 	],
 	function(app, viewLocator, system, router) {
@@ -40,7 +36,7 @@ define([
 		//router.mapNav('todos');
 
 		app.adaptToDevice();
-		
+
 		//Show the app by setting the root view model for our application with a transition.
 		app.setRoot('viewmodels/shell', 'fadein');
 	});

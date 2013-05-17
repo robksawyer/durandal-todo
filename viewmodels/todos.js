@@ -6,9 +6,11 @@
 	'durandal/system', 
 	'scripts/dataservice', 
 	'scripts/model',
-	'scripts/config'
+	'scripts/config',
+	'scripts/bindings',
+	'scripts/native'
 	], 
-	function(ko, jQuery, app, system, dataservice, model, config) {
+	function(ko, $, app, system, dataservice, model, config) {
 	'use strict';
 
 	var self = this;
@@ -57,46 +59,24 @@
 		return ko.utils.unwrapObservable(count) === 1 ? 'item' : 'items';
 	};
 
-	var vm = {
-		todos: todos,
-		current: current,
-		showMode: showMode,
-		activate: function(){
-			system.log("Todo ViewModel Activated");
-			dataservice.getTodos(todos);
-			system.log(todos());
-			// map array of passed in todos to an observableArray of Todo objects
-			/*todos = ko.observableArray( ko.utils.arrayMap( todos, function( todo ) {
-				if(!todo) return;
-				return new model.Todo( todo.title, todo.completed );
-			}));*/
-		},
-		add: add,
-		remove: remove,
-		removeCompleted: removeCompleted,
-		editItem: editItem,
-		stopEditing: stopEditing,
-		getLabel: getLabel
-	};
-
-	// count of all completed todos
-	vm.completedCount = ko.computed(function () {
+		// count of all completed todos
+	var completedCount = ko.computed(function () {
 		return ko.utils.arrayFilter(todos(), function (todo) {
 			if(!todo) return;
 			return todo.completed();
 		}).length;
-	}, vm);
+	});
 
 	// count of todos that are not complete
-	vm.remainingCount = ko.computed(function () {
-		return todos().length - vm.completedCount();
-	}, vm);
+	var remainingCount = ko.computed(function () {
+		return todos().length - completedCount();
+	});
 
 	// writeable computed observable to handle marking all complete/incomplete
-	vm.allCompleted = ko.computed({
+	var allCompleted = ko.computed({
 		//always return true/false based on the done flag of all todos
 		read: function () {
-			return !vm.remainingCount();
+			return !remainingCount();
 		},
 		// set all todos to the written value (true/false)
 		write: function (newValue) {
@@ -105,10 +85,10 @@
 				todo.completed(newValue);
 			});
 		}
-	}, vm);
+	});
 
 	//filter the todos based on the completion status
-	vm.filteredTodos = ko.computed(function () {
+	var filteredTodos = ko.computed(function () {
 		switch (showMode()) {
 			case 'active':
 				return todos().filter(function (todo) {
@@ -121,15 +101,38 @@
 			default:
 				return todos();
 		}
-	}, vm);
+	});
 
-	// internal computed observable that fires whenever anything changes in our todos
-	ko.computed(function () {
-		// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
-		localStorage.setItem(config.localStorageItem, ko.toJSON( todos ));
-	}).extend({
-		throttle: 500
-	}); // save at most twice per second
+	var vm = {
+		displayName: 'Todos',
+		todos: todos,
+		current: current,
+		showMode: showMode,
+		activate: function(){
+			system.log("Todo ViewModel Activated");
+			dataservice.getTodos(todos);
+			system.log(todos());
 
+			if(todos().length > 0){
+				// internal computed observable that fires whenever anything changes in our todos
+				ko.computed(function () {
+					// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
+					localStorage.setItem(config.localStorageItem, ko.toJSON( todos ));
+				}).extend({
+					throttle: 500
+				}); // save at most twice per second
+			}
+		},
+		add: add,
+		remove: remove,
+		removeCompleted: removeCompleted,
+		editItem: editItem,
+		stopEditing: stopEditing,
+		getLabel: getLabel,
+		filteredTodos: filteredTodos,
+		allCompleted: allCompleted,
+		remainingCount: remainingCount,
+		completedCount: completedCount
+	};
 	return vm;
 });
