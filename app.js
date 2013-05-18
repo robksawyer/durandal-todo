@@ -1,34 +1,27 @@
 require.config({
 	'baseUrl': '.',
 	'paths': {
-		'jquery': 'components/jquery/jquery.min',
-		'sammy': 'components/sammy/lib/min/sammy-latest.min',
-		'knockout': 'components/knockout/build/output/knockout-latest',
-		'text': 'components/text/text',
-		'r': 'components/dist/r',
-		'config': 'scripts/config',
-		'model': 'scripts/model',
-		'dataservice': 'scripts/dataservice',
-		'native': 'scripts/native',
-		'bindings': 'scripts/bindings'
+		'text': 'components/text/text'
 	}
 });
 
 // Load the main app module to start the app
 define([
-		'jquery',
-		'knockout',
 		'durandal/app',
 		'durandal/viewLocator',
 		'durandal/system',
 		'durandal/plugins/router',
+        'scripts/bindings',
 		'durandal/transitions/fadein'
 	],
-	function($, ko, app, viewLocator, system, router) {
+	function(app, viewLocator, system, router, bindings) {
 		'use strict';
 
 		// Your starting point. Enjoy the ride!
 		system.debug(true);
+
+        // Add ko.binding
+        bindings.init();
 
 		app.title = 'Durandal • TodoMVC';
 		app.start().then(function () {
@@ -41,7 +34,7 @@ define([
 			app.adaptToDevice();
 
 			//Show the app by setting the root view model for our application with a transition.
-			app.setRoot('viewmodels/shell', 'fadein');
+			app.setRoot('viewmodels/shell', 'entrance');
 		});
 
 		function configureRouting() {

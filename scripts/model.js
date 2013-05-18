@@ -1,7 +1,4 @@
-define([
-	'knockout'
-	],
-	function (ko) {
+define(function () {
 		'use strict';
 
 		// represent a single todo item
