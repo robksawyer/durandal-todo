@@ -1,19 +1,14 @@
 define(
 	[
-	'knockout',
-	'jquery',
-	'durandal/app', 
+	'durandal/app',
 	'durandal/system', 
 	'scripts/dataservice', 
-	'scripts/model',
-	'scripts/config',
-	'scripts/bindings'
-	], 
-	function(ko, jQuery, app, system, dataservice, model, config) {
+	'scripts/model'
+	],
+	function(app, system, dataservice, model) {
 	'use strict';
 
-	var self = this,
-		current = ko.observable(), // store the new todo value being entered
+	var current = ko.observable(), // store the new todo value being entered
 		todos = ko.observableArray([]),
 		showMode = ko.observable('all');
 
