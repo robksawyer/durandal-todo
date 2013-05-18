@@ -1,12 +1,15 @@
 define([
-	'knockout',
-	'scripts/config',
-	'durandal/system'
-	], 
-	function(ko, config, system){
+	'durandal/system',
+    'scripts/config'
+	],
+  function(system, config){
 		'use strict';
 
-		return function(){
+        return {
+            init: init
+        };
+
+		function init(){
 			system.log("Bindings added");
 
 			// a custom binding to handle the enter key (could go in a separate library)
@@ -14,11 +17,10 @@ define([
 				init: function (element, valueAccessor, allBindingsAccessor, data) {
 					var wrappedHandler, newValueAccessor;
 
-					system.log("ENTER KEY PRESSED");
-
 					// wrap the handler with a check for the enter key
 					wrappedHandler = function (data, event) {
 						if (event.keyCode === config.ENTER_KEY) {
+                            system.log("ENTER KEY PRESSED");
 							valueAccessor().call(this, data, event);
 						}
 					};
@@ -51,5 +53,5 @@ define([
 					}, 0);
 				}
 			};
-		};
+		}
 });

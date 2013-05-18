@@ -1,18 +1,13 @@
 ﻿define(
 	[
-	'jquery',
-	'knockout',
 	'scripts/config',
 	'durandal/app', 
 	'durandal/system', 
 	'scripts/dataservice', 
-	'scripts/model',
-	'scripts/bindings'
+	'scripts/model'
 	], 
-	function($, ko, config, app, system, dataservice, model) {
+	function(config, app, system, dataservice, model) {
 	'use strict';
-
-	var self = this;
 
 	var todos = ko.observableArray([]),
 		current = ko.observable(), // store the new todo value being entered
@@ -62,12 +57,12 @@
 		}
 	});
 
-	var vm = {
+    return {
 		displayName: 'Todos',
 		activate: function(){
 			system.log("Todo ViewModel Activated");
 			dataservice.getTodos(todos);
-			system.log(todos());
+			system.log('hello form activate', todos());
 
 			if(todos().length > 0){
 				// internal computed observable that fires whenever anything changes in our todos
@@ -94,15 +89,17 @@
 		completedCount: completedCount
 	};
 
-	return vm;
+
+
+
 
 	// add a new todo, when enter key is pressed
 	function add() {
 		system.log("Adding item");
-		var current = current().trim();
+		var current = this.current().trim();
 		if (current) {
 			todos.push(new model.Todo(current));
-			current('');
+			this.current('');
 		}
 	}
 

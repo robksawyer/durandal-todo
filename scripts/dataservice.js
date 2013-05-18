@@ -1,10 +1,9 @@
 define([
-	'knockout',
-	'durandal/system', 
+	'durandal/system',
 	'scripts/model',
 	'scripts/config'
 	],
-	function(ko, system, model, config){
+	function(system, model, config){
 		
 		var getTodos = function (todoObservables){
 			//reset the observable 
@@ -24,9 +23,9 @@ define([
 			return todos;
 		};
 
-		var dataservice = {
+        return {
 			getTodos: getTodos
 		};
-		return dataservice;
+
 	}
 );

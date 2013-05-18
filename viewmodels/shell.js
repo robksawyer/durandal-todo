@@ -1,11 +1,7 @@
 ﻿define([
-	'durandal/app',
-	'durandal/system',
-	'durandal/plugins/router',
-	'scripts/bindings',
-	'scripts/native'
-	], 
-	function (app, system, router) {
+	'durandal/plugins/router'
+	],
+	function (router) {
 	return {
 		router: router,
 		activate: function () {
