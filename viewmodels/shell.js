@@ -1,16 +1,14 @@
 ﻿define([
-	'durandal/system',
-	'durandal/plugins/router', 
 	'durandal/app',
-	'scripts/config'
+	'durandal/system',
+	'durandal/plugins/router',
+	'scripts/bindings',
+	'scripts/native'
 	], 
-	function (system, router, app, config) {
+	function (app, system, router) {
 	return {
 		router: router,
 		activate: function () {
-			return true;
-		},
-		viewAttached: function(){
 			return router.activate('todos');
 		}
 	};

@@ -1,16 +1,15 @@
 ﻿define(
 	[
-	'knockout',
 	'jquery',
+	'knockout',
+	'scripts/config',
 	'durandal/app', 
 	'durandal/system', 
 	'scripts/dataservice', 
 	'scripts/model',
-	'scripts/config',
-	'scripts/bindings',
-	'scripts/native'
+	'scripts/bindings'
 	], 
-	function(ko, $, app, system, dataservice, model, config) {
+	function($, ko, config, app, system, dataservice, model) {
 	'use strict';
 
 	var self = this;
@@ -18,46 +17,6 @@
 	var todos = ko.observableArray([]),
 		current = ko.observable(), // store the new todo value being entered
 		showMode = ko.observable('all');
-
-	// add a new todo, when enter key is pressed
-	var add = function() {
-		var current = current().trim();
-		if (current) {
-			todos.push(new model.Todo(current));
-			current('');
-		}
-	};
-
-	// remove a single todo
-	var remove = function(todo) {
-		todos.remove(todo);
-	};
-
-	// remove all completed todos
-	var removeCompleted = function() {
-		todos.remove(function(todo) {
-			return todo.completed();
-		});
-	};
-
-	// edit an item
-	var editItem = function(item) {
-		item.editing(true);
-	};
-
-	// stop editing an item.  Remove the item, if it is now empty
-	var stopEditing = function(item) {
-		item.editing(false);
-
-		if (!item.title().trim()) {
-			remove(item);
-		}
-	};
-
-	// helper function to keep expressions out of markup
-	var getLabel = function(count) {
-		return ko.utils.unwrapObservable(count) === 1 ? 'item' : 'items';
-	};
 
 		// count of all completed todos
 	var completedCount = ko.computed(function () {
@@ -105,9 +64,6 @@
 
 	var vm = {
 		displayName: 'Todos',
-		todos: todos,
-		current: current,
-		showMode: showMode,
 		activate: function(){
 			system.log("Todo ViewModel Activated");
 			dataservice.getTodos(todos);
@@ -123,6 +79,9 @@
 				}); // save at most twice per second
 			}
 		},
+		todos: todos,
+		current: current,
+		showMode: showMode,
 		add: add,
 		remove: remove,
 		removeCompleted: removeCompleted,
@@ -134,5 +93,47 @@
 		remainingCount: remainingCount,
 		completedCount: completedCount
 	};
+
 	return vm;
+
+	// add a new todo, when enter key is pressed
+	function add() {
+		system.log("Adding item");
+		var current = current().trim();
+		if (current) {
+			todos.push(new model.Todo(current));
+			current('');
+		}
+	}
+
+	// remove a single todo
+	function remove(todo) {
+		todos.remove(todo);
+	}
+
+	// remove all completed todos
+	function removeCompleted() {
+		todos.remove(function(todo) {
+			return todo.completed();
+		});
+	}
+
+	// edit an item
+	function editItem(item) {
+		item.editing(true);
+	}
+
+	// stop editing an item.  Remove the item, if it is now empty
+	function stopEditing(item) {
+		item.editing(false);
+
+		if (!item.title().trim()) {
+			remove(item);
+		}
+	}
+
+	// helper function to keep expressions out of markup
+	function getLabel(count) {
+		return ko.utils.unwrapObservable(count) === 1 ? 'item' : 'items';
+	}
 });
