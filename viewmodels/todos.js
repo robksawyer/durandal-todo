@@ -59,7 +59,6 @@
 
 		// add a new todo, when enter key is pressed
 	var add = function() {
-		system.log('Adding item');
 		var current = this.current().trim();
 		if (current) {
 			todos.push(new model.Todo(current, false));
@@ -100,16 +99,12 @@
 	return {
 		displayName: 'Todos',
 		activate: function(data){
-			system.log('Activating...', data.mode);
-
 			//Fetch local data, if exists
 			todos = dataservice.getTodos(todos);
 
 			//Update the mode
 			if(data.mode){
 				showMode(data.mode);
-				//todos(filteredTodos());
-				//system.log('Filtered todos', todos);
 			}else{
 				showMode('all');
 			}
@@ -123,12 +118,6 @@
 			}); // save at most twice per second
 		},
 		init: init,
-		active: function(){
-			system.log("Show active items");
-		},
-		completed: function(){
-			system.log("Show completed items");
-		},
 		todos: todos,
 		current: current,
 		showMode: showMode,

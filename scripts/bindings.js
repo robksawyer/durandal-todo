@@ -10,8 +10,7 @@ define([
 		};
 
 		function init(){
-			system.log("Bindings added");
-			
+
 			// a custom binding to handle the enter key (could go in a separate library)
 			ko.bindingHandlers.enterKey = {
 				init: function (element, valueAccessor, allBindingsAccessor, data) {
