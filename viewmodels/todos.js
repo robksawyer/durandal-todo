@@ -30,7 +30,7 @@
 	var allCompleted = ko.computed({
 		//always return true/false based on the done flag of all todos
 		read: function () {
-			return !remainingCount;
+			return !remainingCount();
 		},
 		// set all todos to the written value (true/false)
 		write: function (newValue) {
