@@ -1,7 +1,7 @@
 require.config({
 	'baseUrl': '.',
 	'paths': {
-		'text': 'components/text/text'
+		'text': 'bower_components/text/text'
 	}
 });
 

@@ -1,0 +1,8 @@
+{
+  "name": "rjs",
+  "version": "2.1.6",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jrburke/r.js"
+  }
+}
