@@ -22,7 +22,7 @@ define([
 
         // Add ko.binding
         bindings.init();
-        
+
 		app.title = 'Durandal • TodoMVC';
 		app.start().then(function () {
 			//Replace 'viewmodels' in the moduleId with 'views' to locate the view.
@@ -38,6 +38,8 @@ define([
 		});
 
 		function configureRouting() {
+			system.log('Configuring routes');
+			
 			//sets default convention of all routes being based off of 'viewmodels'
 			router.useConvention();                                             
 
@@ -45,6 +47,7 @@ define([
 			//by convention it determines that the viewmodel location is 'viewmodels/surveys'
 			//ex: visiting '#/surveys' results in 'viewmodels/surveys'
 			router.mapNav('todos');
+			router.mapRoute('todos/:mode');
 
 			//creates a route for showing a particular survey
 			//':id' extracts the value and it is passed as an argument into the 'activate' function of the viewmodel

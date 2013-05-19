@@ -59,7 +59,7 @@
 
 		// add a new todo, when enter key is pressed
 	var add = function() {
-		system.log("Adding item");
+		system.log('Adding item');
 		var current = this.current().trim();
 		if (current) {
 			todos.push(new model.Todo(current, false));
@@ -69,7 +69,6 @@
 
 	// remove a single todo
 	var remove = function(todo) {
-		system.log("Removing item.");
 		todos.remove(todo);
 	};
 
@@ -100,9 +99,21 @@
 
 	return {
 		displayName: 'Todos',
-		activate: function(){
+		activate: function(data){
+			system.log('Activating...', data.mode);
+
 			//Fetch local data, if exists
 			todos = dataservice.getTodos(todos);
+
+			//Update the mode
+			if(data.mode){
+				showMode(data.mode);
+				//todos(filteredTodos());
+				//system.log('Filtered todos', todos);
+			}else{
+				showMode('all');
+			}
+
 			// internal computed observable that fires whenever anything changes in our todos
 			ko.computed(function() {
 				// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
@@ -112,6 +123,12 @@
 			}); // save at most twice per second
 		},
 		init: init,
+		active: function(){
+			system.log("Show active items");
+		},
+		completed: function(){
+			system.log("Show completed items");
+		},
 		todos: todos,
 		current: current,
 		showMode: showMode,
