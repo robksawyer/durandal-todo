@@ -1,17 +1,17 @@
 define([
 	'durandal/system',
-    'scripts/config'
+	'scripts/config'
 	],
-  function(system, config){
+	function(system, config){
 		'use strict';
 
-        return {
-            init: init
-        };
+		return {
+			init: init
+		};
 
 		function init(){
 			system.log("Bindings added");
-
+			
 			// a custom binding to handle the enter key (could go in a separate library)
 			ko.bindingHandlers.enterKey = {
 				init: function (element, valueAccessor, allBindingsAccessor, data) {
@@ -20,7 +20,6 @@ define([
 					// wrap the handler with a check for the enter key
 					wrappedHandler = function (data, event) {
 						if (event.keyCode === config.ENTER_KEY) {
-                            system.log("ENTER KEY PRESSED");
 							valueAccessor().call(this, data, event);
 						}
 					};

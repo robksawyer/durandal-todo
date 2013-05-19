@@ -12,15 +12,14 @@ define([
 			var todos = [];
 
 			// check local storage for todos
-			data = ko.utils.parseJson(localStorage.getItem(config.localStorageItem));
+			var data = ko.utils.parseJson(localStorage.getItem(config.localStorageItem));
 			if(data){
 				data.forEach(function(item){
-					var t = new model.Todo(item);
-					todos.push(t);
+					todos.push(new model.Todo(item.title, item.completed));
 				});
 			}
 			todoObservables(todos); //Make the observable fire a change	
-			return todos;
+			return todoObservables;
 		};
 
         return {

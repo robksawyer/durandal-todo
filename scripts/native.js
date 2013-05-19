@@ -1,7 +1,7 @@
 define(function(){
-  'use strict';
-  
-  return function(){
+	'use strict';
+
+	return function(){
 	// trim polyfill
 	if ( !String.prototype.trim ) {
 		String.prototype.trim = function() {

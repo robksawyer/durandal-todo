@@ -22,7 +22,7 @@ define([
 
         // Add ko.binding
         bindings.init();
-
+        
 		app.title = 'Durandal • TodoMVC';
 		app.start().then(function () {
 			//Replace 'viewmodels' in the moduleId with 'views' to locate the view.
@@ -34,7 +34,7 @@ define([
 			app.adaptToDevice();
 
 			//Show the app by setting the root view model for our application with a transition.
-			app.setRoot('viewmodels/shell', 'entrance');
+			app.setRoot('viewmodels/shell', 'fadein');
 		});
 
 		function configureRouting() {

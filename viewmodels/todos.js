@@ -30,7 +30,7 @@
 	var allCompleted = ko.computed({
 		//always return true/false based on the done flag of all todos
 		read: function () {
-			return !remainingCount();
+			return !remainingCount;
 		},
 		// set all todos to the written value (true/false)
 		write: function (newValue) {
@@ -57,23 +57,64 @@
 		}
 	});
 
-    return {
+		// add a new todo, when enter key is pressed
+	var add = function() {
+		system.log("Adding item");
+		var current = this.current().trim();
+		if (current) {
+			this.todos.push(new model.Todo(current, false));
+			this.current('');
+		}
+	};
+
+	// remove a single todo
+	var remove = function(todo) {
+		system.log("Removing item.");
+		this.todos.remove(todo);
+	};
+
+	// remove all completed todos
+	var removeCompleted = function() {
+		this.todos.remove(function(todo) {
+			return todo.completed();
+		});
+	};
+
+	// edit an item
+	var editItem = function(item) {
+		item.editing(true);
+	};
+
+	// stop editing an item.  Remove the item, if it is now empty
+	var stopEditing = function(item) {
+		item.editing(false);
+
+		if (!item.title().trim()) {
+			remove(item);
+		}
+	};
+
+	// helper function to keep expressions out of markup
+	var getLabel = function(count) {
+		return ko.utils.unwrapObservable(count) === 1 ? 'item' : 'items';
+	};
+
+	return {
 		displayName: 'Todos',
 		activate: function(){
-			system.log("Todo ViewModel Activated");
-			dataservice.getTodos(todos);
-			system.log('hello form activate', todos());
+			//Fetch local data, if exists
+			todos = dataservice.getTodos(todos);
+			system.log(todos());
 
-			if(todos().length > 0){
-				// internal computed observable that fires whenever anything changes in our todos
-				ko.computed(function () {
-					// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
-					localStorage.setItem(config.localStorageItem, ko.toJSON( todos ));
-				}).extend({
-					throttle: 500
-				}); // save at most twice per second
-			}
+			// internal computed observable that fires whenever anything changes in our todos
+			ko.computed(function() {
+				// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
+				localStorage.setItem( config.localStorageItem, ko.toJSON( todos ) );
+			}).extend({
+				throttle: 500
+			}); // save at most twice per second
 		},
+		init: init,
 		todos: todos,
 		current: current,
 		showMode: showMode,
@@ -90,47 +131,15 @@
 	};
 
 
-
-
-
-	// add a new todo, when enter key is pressed
-	function add() {
-		system.log("Adding item");
-		var current = this.current().trim();
-		if (current) {
-			todos.push(new model.Todo(current));
-			this.current('');
-		}
+	function init(){
+		// internal computed observable that fires whenever anything changes in our todos
+		ko.computed(function () {
+			system.log("HERE");
+			// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
+			localStorage.setItem(config.localStorageItem, ko.toJSON( todos ));
+		}).extend({
+			throttle: 500
+		}); // save at most twice per second
 	}
 
-	// remove a single todo
-	function remove(todo) {
-		todos.remove(todo);
-	}
-
-	// remove all completed todos
-	function removeCompleted() {
-		todos.remove(function(todo) {
-			return todo.completed();
-		});
-	}
-
-	// edit an item
-	function editItem(item) {
-		item.editing(true);
-	}
-
-	// stop editing an item.  Remove the item, if it is now empty
-	function stopEditing(item) {
-		item.editing(false);
-
-		if (!item.title().trim()) {
-			remove(item);
-		}
-	}
-
-	// helper function to keep expressions out of markup
-	function getLabel(count) {
-		return ko.utils.unwrapObservable(count) === 1 ? 'item' : 'items';
-	}
 });
