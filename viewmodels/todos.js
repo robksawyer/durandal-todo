@@ -62,7 +62,7 @@
 		system.log("Adding item");
 		var current = this.current().trim();
 		if (current) {
-			this.todos.push(new model.Todo(current, false));
+			todos.push(new model.Todo(current, false));
 			this.current('');
 		}
 	};
@@ -70,7 +70,7 @@
 	// remove a single todo
 	var remove = function(todo) {
 		system.log("Removing item.");
-		this.todos.remove(todo);
+		todos.remove(todo);
 	};
 
 	// remove all completed todos
@@ -88,7 +88,6 @@
 	// stop editing an item.  Remove the item, if it is now empty
 	var stopEditing = function(item) {
 		item.editing(false);
-
 		if (!item.title().trim()) {
 			remove(item);
 		}
@@ -104,8 +103,6 @@
 		activate: function(){
 			//Fetch local data, if exists
 			todos = dataservice.getTodos(todos);
-			system.log(todos());
-
 			// internal computed observable that fires whenever anything changes in our todos
 			ko.computed(function() {
 				// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
@@ -134,7 +131,6 @@
 	function init(){
 		// internal computed observable that fires whenever anything changes in our todos
 		ko.computed(function () {
-			system.log("HERE");
 			// store a clean copy to local storage, which also creates a dependency on the observableArray and all observables in each item
 			localStorage.setItem(config.localStorageItem, ko.toJSON( todos ));
 		}).extend({
