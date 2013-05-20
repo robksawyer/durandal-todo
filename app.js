@@ -11,7 +11,7 @@ define([
 		'durandal/viewLocator',
 		'durandal/system',
 		'durandal/plugins/router',
-        'scripts/bindings',
+		'scripts/bindings',
 		'durandal/transitions/fadein'
 	],
 	function(app, viewLocator, system, router, bindings) {
