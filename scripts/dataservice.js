@@ -1,6 +1,6 @@
 define([
 	'durandal/system',
-	'scripts/model',
+	'viewmodels/model',
 	'scripts/config'
 	],
 	function(system, model, config){
