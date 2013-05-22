@@ -3,7 +3,7 @@ define(
 	'durandal/app',
 	'durandal/system', 
 	'scripts/dataservice', 
-	'scripts/model'
+	'viewmodels/model'
 	],
 	function(app, system, dataservice, model) {
 	'use strict';
