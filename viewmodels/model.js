@@ -1,4 +1,5 @@
-define(function () {
+define(
+	function() {
 		'use strict';
 
 		// represent a single todo item
@@ -33,4 +34,5 @@ define(function () {
 			//Any Knockout computeds can go here.
 			return entity;
 		}
-});
+	}
+);
